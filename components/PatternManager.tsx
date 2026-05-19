@@ -2,7 +2,14 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
 type Pattern = {
@@ -38,7 +45,8 @@ export function PatternManager({ onApplied }: { onApplied: () => void }) {
 
   const onCreate = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
 
     await fetch("/api/patterns", {
       method: "POST",
@@ -52,7 +60,7 @@ export function PatternManager({ onApplied }: { onApplied: () => void }) {
       }),
     });
 
-    event.currentTarget.reset();
+    form.reset();
     await load();
   };
 
@@ -69,6 +77,7 @@ export function PatternManager({ onApplied }: { onApplied: () => void }) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Padrões recorrentes</DialogTitle>
+          <DialogDescription>Cadastre padrões para lançar transações recorrentes automaticamente.</DialogDescription>
         </DialogHeader>
 
         <form className="space-y-2" onSubmit={onCreate}>

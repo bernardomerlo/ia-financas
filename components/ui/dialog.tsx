@@ -30,3 +30,10 @@ export function DialogHeader({ className, ...props }: React.HTMLAttributes<HTMLD
 export function DialogTitle({ className, ...props }: DialogPrimitive.DialogTitleProps) {
   return <DialogPrimitive.Title className={cn("text-lg font-semibold", className)} {...props} />;
 }
+
+export function DialogDescription({
+  className,
+  ...props
+}: DialogPrimitive.DialogDescriptionProps) {
+  return <DialogPrimitive.Description className={cn("text-sm text-zinc-600", className)} {...props} />;
+}

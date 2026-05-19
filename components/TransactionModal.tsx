@@ -2,7 +2,14 @@
 
 import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
 
@@ -12,7 +19,8 @@ export function TransactionModal({ onCreated }: { onCreated: () => void }) {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
 
     await fetch("/api/transactions", {
       method: "POST",
@@ -27,7 +35,7 @@ export function TransactionModal({ onCreated }: { onCreated: () => void }) {
 
     setOpen(false);
     onCreated();
-    event.currentTarget.reset();
+    form.reset();
   };
 
   return (
@@ -38,6 +46,7 @@ export function TransactionModal({ onCreated }: { onCreated: () => void }) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Adicionar transação</DialogTitle>
+          <DialogDescription>Preencha os campos para registrar uma nova transação.</DialogDescription>
         </DialogHeader>
         <form className="space-y-3" onSubmit={onSubmit}>
           <Input name="description" placeholder="Descrição" required />

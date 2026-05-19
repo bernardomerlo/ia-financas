@@ -32,11 +32,12 @@ export async function GET(
   ]);
 
   const balances = calculateDailyBalances(transactions, dailyExpenses, startBalance, month, year);
+  const typedTransactions = transactions as Array<{ type: "ENTRADA" | "SAIDA"; amount: number }>;
 
-  const entriesTotal = transactions
+  const entriesTotal = typedTransactions
     .filter((transaction) => transaction.type === "ENTRADA")
     .reduce((sum, transaction) => sum + transaction.amount, 0);
-  const expensesTotal = transactions
+  const expensesTotal = typedTransactions
     .filter((transaction) => transaction.type === "SAIDA")
     .reduce((sum, transaction) => sum + transaction.amount, 0);
 
